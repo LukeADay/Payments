@@ -14,7 +14,10 @@
 *.ipynb_checkpoints/
 
 # Ignore macOS .DS_Store files
-.DS_Store
+*.DS_Store
 
 # Ignore Visual Studio Code settings folder
-.vscode/
+*.vscode/
+
+# Ignore R history
+*.Rhistory
