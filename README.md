@@ -18,9 +18,11 @@ This repository is structured as follows:
 │   └── performance.csv
 ├── log
 ├── models
+│   ├── gbm_grid_1_model_14.zip
 │   └── gbm_grid_1_model_4
 ├── notebooks
 │   ├── EDA.ipynb
+│   ├── Summary.pdf
 │   └── Summary.ipynb
 ├── scripts
 │   ├── __init__.py
@@ -28,18 +30,12 @@ This repository is structured as follows:
 │   └── setup_env.sh
 ├── src
 │   ├── __init__.py
-│   ├── __pycache__
-│   │   └── __init__.cpython-312.pyc
+│   │   
 │   ├── data_handler
 │   │   ├── __init__.py
-│   │   ├── __pycache__
-│   │   │   ├── __init__.cpython-312.pyc
-│   │   │   └── data_loader.cpython-312.pyc
 │   │   └── data_loader.py
 │   ├── modelling
 │       ├── __init__,py
-│       ├── __pycache__
-│       │   └── model.cpython-312.pyc
 │       └── model.py
 ```
 
@@ -73,5 +69,5 @@ The pipeline saves 2 models:
 * A H2O Binary model `gbm_grid_1_model_4`, which can be loaded but requires the same version of H2O.
 * A MOJO model (model object optimised) - this should be used for production as it doesn't require a specific version of H2O. This can be used for real-time scoring in production.
 
-The `Summary.ipynb` file loads the trained H2O binary model from the `models` directory with the processed data and produces **variable importance**, **shap summary plots** and **partial dependence plots**. This file also contains details behind the various stages of the analysis.
+The `Summary.ipynb` file loads the trained H2O binary model from the `models` directory with the processed data and produces **variable importance**, **shap summary plots** and **partial dependence plots**. This file also contains details behind the various stages of the analysis.g
 
