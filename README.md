@@ -54,7 +54,7 @@ This repository is structured as follows:
 1. [x] Begin by cloning the repository and place the data file in the `data` folder.
 2. [x] Open terminal and navigate to the `scripts` folder with `cd scripts` and run the shell script `setup_env.sh` to set up the Conda :snake: environment by running either `bash setup_env.sh` or `./setup_env.sh` in the terminal.
 3. [x] Navigate back to the parent directory `Payments` with `cd ..`.
-4. [x] Run the pipeline with `PYTHONPATH=. python scripts/main.py`. The following help file shows that `predictors` is the only argument this script takes, which consists of the features that model is trained on. This can be left blank and the default set is used.
+4. [x] Run the pipeline with `PYTHONPATH=. python scripts/main.py` from the `Payments` folder. The following help file shows that `predictors` is the only argument this script takes, which consists of the features that model is trained on. This can be left blank and the default set is used.
 
 ```
 usage: main.py [-h] [--predictors PREDICTORS [PREDICTORS ...]]
@@ -67,5 +67,11 @@ options:
                         List of predictor variables (space-separated)
 ```
 
-The `Summary.ipynb` file loads the trained model from the `models` directory with the processed data and produces **variable importance**, **shap summary plots** and **partial dependence plots**. This file also contains details behind the various stages of the analysis.
+## Outputs
+
+The pipeline saves 2 models: 
+* A H2O Binary model `gbm_grid_1_model_4`, which can be loaded but requires the same version of H2O.
+* A MOJO model (model object optimised) - this should be used for production as it doesn't require a specific version of H2O. This can be used for real-time scoring in production.
+
+The `Summary.ipynb` file loads the trained H2O binary model from the `models` directory with the processed data and produces **variable importance**, **shap summary plots** and **partial dependence plots**. This file also contains details behind the various stages of the analysis.
 
