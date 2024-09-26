@@ -49,6 +49,7 @@ def main():
         model.train_model(train, valid, test, predictors)
         logging.info("/n Saving h2o model in models directory...")
         model.save_h2o_model()
+        model.save_h2o_mojo_model()
         logging.info("/n Performing validation...")
         model.log_performance()
         model.h2o_shutdown()
