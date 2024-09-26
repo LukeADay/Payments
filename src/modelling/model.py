@@ -35,8 +35,8 @@ class GBMModel():
                            'max_models': 10,
                            'seed': 1}
 
-        gbm_params['balance_classes'] = [True]
-        search_criteria['stopping_metric'] = 'aucpr'
+        gbm_params['balance_classes'] = [True] # Oversample the minority class to deal with class imbalance
+        search_criteria['stopping_metric'] = 'aucpr' # Area under the precision recall curve is appropriate for imbalanced data
 
         # Define model
         gbm_grid = H2OGridSearch(model = H2OGradientBoostingEstimator(),
@@ -47,6 +47,7 @@ class GBMModel():
         # Start the timer
         start_time = time.time()
 
+        # Train the model and tune hyperparameters with 3 fold cross-validation and calibrate probabilities
         gbm_grid.train(x = predictors,
                        y = target,
                        training_frame = train,
@@ -64,11 +65,12 @@ class GBMModel():
 
         print(f"The model training time was {elapsed_time} seconds")
 
+        # Select the best model by choosing the one with the highest AUC PR
         gbm_gridperf = gbm_grid.get_grid(sort_by = 'aucpr', decreasing = True)
 
         best_gbm = gbm_gridperf.models[0]
 
-        self.model = best_gbm
+        self.model = best_gbm # Save best model as object attribute
 
     def log_performance(self):
         model = self.model
@@ -145,9 +147,17 @@ class GBMModel():
             'Value': values
         })   
 
-        results.to_csv(output_file, index = False)
+        results.to_csv(output_file, index = False) # Save as csv in the performance folder
 
         return results
+
+    def save_h2o_mojo_model(self):
+        model = self.model
+        models_dir = '../Payments/models'
+
+        # Save the model as a MOJO
+        mojo_path = model.download_mojo(path=models_dir)
+        print(f"Model saved as MOJO to: {mojo_path}")
 
     def save_h2o_model(self):
         model = self.model
